@@ -210,4 +210,19 @@ abstract class MapboxGlPlatform {
     throw UnimplementedError(
         'setSymbolTextIgnorePlacement() has not been implemented.');
   }
+
+  Future<void> addSource(String sourceId, String geojson) async {
+    throw UnimplementedError(
+        'setSymbolTextIgnorePlacement() has not been implemented.');
+  }
+
+  Future<void> addSymbolLayer(String sourceId, String layerId, Map<String, String> properties) async {
+    throw UnimplementedError(
+        'setSymbolTextIgnorePlacement() has not been implemented.');
+  }
+
+  Future<void> addLineLayer(String sourceId, String layerId, Map<String, String> properties) async {
+    throw UnimplementedError(
+        'setSymbolTextIgnorePlacement() has not been implemented.');
+  }
 }

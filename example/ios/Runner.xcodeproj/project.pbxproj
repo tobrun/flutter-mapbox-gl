@@ -247,15 +247,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/4794199C-B164-3A2D-A3B4-553B7D49EDD5.bcsymbolmap",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/097AD13C-9FDA-310F-8B76-64CB67B06A27.bcsymbolmap",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/491A77E9-7DBC-3309-A93C-BADAE0DDBC6E.bcsymbolmap",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/3F114CA8-302D-327F-87C3-670E0EC63C9A.bcsymbolmap",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/1C04753A-6715-3177-9FDA-8F75B4324E0C.bcsymbolmap",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/EE5140C5-686C-3DED-8916-3717EC675952.bcsymbolmap",
 				"${BUILT_PRODUCTS_DIR}/MapboxAnnotationExtension/MapboxAnnotationExtension.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
 				"${BUILT_PRODUCTS_DIR}/location/location.framework",
 				"${BUILT_PRODUCTS_DIR}/mapbox_gl/mapbox_gl.framework",
 			);
@@ -264,12 +261,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
-				"${BUILT_PRODUCTS_DIR}/4794199C-B164-3A2D-A3B4-553B7D49EDD5.bcsymbolmap",
-				"${BUILT_PRODUCTS_DIR}/097AD13C-9FDA-310F-8B76-64CB67B06A27.bcsymbolmap",
-				"${BUILT_PRODUCTS_DIR}/491A77E9-7DBC-3309-A93C-BADAE0DDBC6E.bcsymbolmap",
-				"${BUILT_PRODUCTS_DIR}/3F114CA8-302D-327F-87C3-670E0EC63C9A.bcsymbolmap",
+				"${BUILT_PRODUCTS_DIR}/1C04753A-6715-3177-9FDA-8F75B4324E0C.bcsymbolmap",
+				"${BUILT_PRODUCTS_DIR}/EE5140C5-686C-3DED-8916-3717EC675952.bcsymbolmap",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxAnnotationExtension.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/location.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/mapbox_gl.framework",
 			);

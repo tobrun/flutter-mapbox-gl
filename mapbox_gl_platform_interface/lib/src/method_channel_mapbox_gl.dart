@@ -453,4 +453,30 @@ class MethodChannelMapboxGl extends MapboxGlPlatform {
       return new Future.error(e);
     }
   }
+
+  @override
+  Future<void> addSource(String sourceId, String geojson) async {
+    await _channel.invokeMethod('source#add', <String, dynamic>{
+      'sourceId': sourceId,
+      'geojson': geojson,
+    });
+  }
+
+  @override
+  Future<void> addSymbolLayer(String sourceId, String layerId, Map<String, String> properties) async {
+    await _channel.invokeMethod('symbolLayer#add', <String, dynamic>{
+      'sourceId': sourceId,
+      'layerId': layerId,
+      'properties': properties
+    });
+  }
+
+  @override
+  Future<void> addLineLayer(String sourceId, String layerId, Map<String, String> properties) async {
+    await _channel.invokeMethod('lineLayer#add', <String, dynamic>{
+      'sourceId': sourceId,
+      'layerId': layerId,
+      'properties': properties
+    });
+  }
 }

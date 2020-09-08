@@ -252,6 +252,18 @@ class MapboxMapController extends ChangeNotifier {
     return MapboxGlPlatform.getInstance(_id).moveCamera(cameraUpdate);
   }
 
+  Future<void> addSource(String sourceId, String geojson) async {
+    await MapboxGlPlatform.getInstance(_id).addSource(sourceId, geojson);
+  }
+
+  Future<void> addSymbolLayer(String sourceId, String layerId, Map<String, String> properties) async {
+    await MapboxGlPlatform.getInstance(_id).addSymbolLayer(sourceId, layerId, properties);
+  }
+
+  Future<void> addLineLayer(String sourceId, String layerId, Map<String, String> properties) async {
+    await MapboxGlPlatform.getInstance(_id).addLineLayer(sourceId, layerId, properties);
+  }
+
   /// Updates user location tracking mode.
   ///
   /// The returned [Future] completes after the change has been made on the
