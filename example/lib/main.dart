@@ -18,6 +18,7 @@ import 'place_source.dart';
 import 'place_symbol.dart';
 import 'place_fill.dart';
 import 'scrolling_map.dart';
+import 'iss_tracker.dart';
 
 final List<ExamplePage> _allPages = <ExamplePage>[
   MapUiPage(),
@@ -30,6 +31,7 @@ final List<ExamplePage> _allPages = <ExamplePage>[
   PlaceCirclePage(),
   PlaceFillPage(),
   ScrollingMapPage(),
+  IssTrackerPage()
 ];
 
 class MapsDemo extends StatelessWidget {

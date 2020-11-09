@@ -14,7 +14,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   location: ^2.5.3
-  http:
+  http: ^0.12.0+4
 
 dependency_overrides:
   mapbox_gl_platform_interface:
@@ -53,6 +53,7 @@ flutter:
     - assets/symbols/custom-icon.png
     - assets/symbols/2.0x/custom-icon.png
     - assets/symbols/3.0x/custom-icon.png
+    - assets/symbols/satellite.png
     - assets/style.json
     - assets/sydney.png
 
