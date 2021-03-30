@@ -131,6 +131,7 @@ final class MapboxMapController
   private LocalizationPlugin localizationPlugin;
   private Style style;
   private List<String> annotationOrder = new ArrayList();
+  private LatLngBounds bounds = null;
 
   MapboxMapController(
     int id,
@@ -265,6 +266,10 @@ final class MapboxMapController
 
     setStyleString(styleStringInitial);
     // updateMyLocationEnabled();
+
+    if(null != bounds) {
+      mapboxMap.setLatLngBoundsForCameraTarget(bounds);
+    }
   }
 
   @Override
@@ -311,7 +316,7 @@ final class MapboxMapController
             throw new IllegalArgumentException("Unknown annotation type: " + annotationType + ", must be either 'fill', 'line', 'circle' or 'symbol'");
         }
       }
-      
+
       if (myLocationEnabled) {
         enableLocationComponent(style);
       }
@@ -1068,7 +1073,10 @@ final class MapboxMapController
 
   @Override
   public void setCameraTargetBounds(LatLngBounds bounds) {
-    mapboxMap.setLatLngBoundsForCameraTarget(bounds);
+    this.bounds = bounds;
+    if(mapboxMap != null) {
+      mapboxMap.setLatLngBoundsForCameraTarget(bounds);
+    }
   }
 
   @Override
