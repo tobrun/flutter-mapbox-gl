@@ -418,7 +418,7 @@ final class MapboxMapController
         mapReadyResult = result;
         break;
       case "map#update": {
-        Convert.interpretMapboxMapOptions(call.argument("options"), this);
+        Convert.interpretMapboxMapOptions(call.argument("options"), this, context);
         result.success(Convert.toJson(getCameraPosition()));
         break;
       }

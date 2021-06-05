@@ -4,7 +4,10 @@
 
 package com.mapbox.mapboxgl;
 
+import android.content.Context;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
+
 import com.mapbox.geojson.Polygon;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdate;
@@ -235,7 +238,8 @@ class Convert {
     return (String) o;
   }
 
-  static void interpretMapboxMapOptions(Object o, MapboxMapOptionsSink sink) {
+  static void interpretMapboxMapOptions(Object o, MapboxMapOptionsSink sink, Context context) {
+    final DisplayMetrics metrics = context.getResources().getDisplayMetrics();
     final Map<?, ?> data = toMap(o);
     final Object cameraTargetBounds = data.get("cameraTargetBounds");
     if (cameraTargetBounds != null) {
@@ -292,7 +296,8 @@ class Convert {
     final Object logoViewMargins = data.get("logoViewMargins");
     if(logoViewMargins != null){
       final List logoViewMarginsData = toList(logoViewMargins);
-      sink.setLogoViewMargins(toInt(logoViewMarginsData.get(0)), toInt(logoViewMarginsData.get(1)));
+      final Point point = toPoint(logoViewMarginsData, metrics.density);
+      sink.setLogoViewMargins(point.x, point.y);
     }
     final Object compassGravity = data.get("compassViewPosition");
     if(compassGravity != null){
@@ -301,12 +306,15 @@ class Convert {
     final Object compassViewMargins = data.get("compassViewMargins");
     if(compassViewMargins != null){
       final List compassViewMarginsData = toList(compassViewMargins);
-      sink.setCompassViewMargins(toInt(compassViewMarginsData.get(0)), toInt(compassViewMarginsData.get(1)));
+      final Point point = toPoint(compassViewMarginsData, metrics.density);
+      sink.setCompassViewMargins(point.x, point.y);
     }
     final Object attributionButtonMargins = data.get("attributionButtonMargins");
     if(attributionButtonMargins != null){
       final List attributionButtonMarginsData = toList(attributionButtonMargins);
-      sink.setAttributionButtonMargins(toInt(attributionButtonMarginsData.get(0)), toInt(attributionButtonMarginsData.get(1)));
+      final Point point = toPoint(attributionButtonMarginsData, metrics.density);
+      final int attributionButtonWidth = toPixels(21, metrics.density);
+      sink.setAttributionButtonMargins(metrics.widthPixels - point.x - attributionButtonWidth, point.y);
     }
   }
 
