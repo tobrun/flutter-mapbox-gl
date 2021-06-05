@@ -12,10 +12,28 @@ buildscript {
     }
 }
 
+def String readSdkTokenFromNetrc(String netrcFile, String repoHostname) {
+    def netrcContent = "cat ${netrcFile}".execute().text.split("\n")
+    boolean foundMachine = false
+    String token = null;
+
+    for (String line : netrcContent) {
+        if (line.startsWith("machine") && line.substring("machine".length()).trim().equals(repoHostname)) {
+            foundMachine = true
+        } else if (foundMachine && token == null && line.startsWith("password")) {
+            token = line.substring("password".length()).trim()
+        }
+    }
+    return token
+}
+
 rootProject.allprojects {
     def token = System.getenv('SDK_REGISTRY_TOKEN')
     if (token == null || token.empty) {
-        throw new Exception("SDK Registry token is null. See README.md for more information.")
+        token = readSdkTokenFromNetrc(System.getenv('HOME') + '/.netrc', 'api.mapbox.com')
+        if (token == null || token.empty) {
+            throw new Exception("SDK Registry token is null. See README.md for more information.")
+        }
     }
     repositories {
         google()
