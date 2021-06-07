@@ -1,5 +1,66 @@
+import org.gradle.internal.os.OperatingSystem
+
 group 'com.mapbox.mapboxgl'
-version '1.0-SNAPSHOT'
+version '1.1-SNAPSHOT'
+
+def getTokenFromEnv() {
+    def token = System.getenv('SDK_REGISTRY_TOKEN');
+    if (token == null || token.empty) {
+        throw new Exception("SDK Registry token is null. See README.md for more information.")
+    }
+    return token;
+}
+
+def getTokenFromNetrc() {
+    def credentials = [:]
+    def netrcPath = System.getProperty("user.home") + '/.netrc';
+    def content = new File(netrcPath);
+    def lastMachine = null;
+
+    if (!content.exists()) {
+        return null;
+    }
+    content.eachLine {
+        it ->
+            it.split().collect {
+                it.trim();
+            }.with {
+                if (it.size() > 1) {
+                    switch (it[0]) {
+                        case 'machine':
+                            lastMachine = it[1];
+                            credentials.put(lastMachine, [:]);
+                            break
+                        default:
+                            credentials.
+                            "$lastMachine".put(it[0], it[1])
+                    }
+                }
+            };
+    }
+
+    if (!credentials.containsKey("api.mapbox.com")) {
+        return null;
+    }
+
+    return credentials["api.mapbox.com"]["password"];
+}
+
+def getToken() {
+    if (OperatingSystem.current().isMacOsX()) {
+        final netrcToken = getTokenFromNetrc();
+        if (netrcToken != null) {
+            return netrcToken;
+        } else {
+            return getTokenFromEnv();
+        }
+    } else {
+        return getTokenFromEnv();
+    }
+}
+
+def token = getToken();
+
 
 buildscript {
     repositories {
@@ -13,10 +74,7 @@ buildscript {
 }
 
 rootProject.allprojects {
-    def token = System.getenv('SDK_REGISTRY_TOKEN')
-    if (token == null || token.empty) {
-        throw new Exception("SDK Registry token is null. See README.md for more information.")
-    }
+
     repositories {
         google()
         jcenter()
