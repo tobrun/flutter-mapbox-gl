@@ -28,10 +28,18 @@ An alternative method to provide access tokens that was required until the v0.7 
 
 ### SDK Download token
 
-You must also [configure a secret access token having the Download: read
-scope][https://docs.mapbox.com/ios/maps/guides/install/]. If this configuration
-is not present, an error like the following appears during the iOS build.
+You must also [configure a secret access token having the _Download: read
+scope_ ([Android][https://docs.mapbox.com/android/maps/guides/install/] [iOS][https://docs.mapbox.com/ios/maps/guides/install/]). If this configuration
+is not present, an error like the following appears during build time:
 
+***Android***
+```
+* What went wrong:
+A problem occurred evaluating project ':mapbox_gl'.
+> SDK Registry token is null. See README.md for more information.
+```
+
+***iOS***
 ```
 [!] Error installing Mapbox-iOS-SDK
 curl: (22) The requested URL returned error: 401 Unauthorized
