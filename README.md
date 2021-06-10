@@ -28,14 +28,25 @@ An alternative method to provide access tokens that was required until the v0.7 
 
 ### SDK Download token
 
-You must also [configure a secret access token having the Download: read
-scope][https://docs.mapbox.com/ios/maps/guides/install/]. If this configuration
-is not present, an error like the following appears during the iOS build.
+The details of SDK installation is explained in the [install guide](https://docs.mapbox.com/ios/maps/guides/install/). 
+The secret token must be configured to contain the DOWNLOADS:READ scope. This can be done through your mapbox dashboard.
+In case you have created your secret token earlier that starts witk `pk`, it may not have the correct scope definition since the new generation secret tokens start witk `sk`. 
+In that case a new token needs to be created. If this configuration is not present, a `403 Forbidden` error is received when downloading the mapbox-android-sdk similar to following:
+
+```
+Could not GET 'https://api.mapbox.com/downloads/v2/releases/maven/com/mapbox/mapboxsdk/mapbox-android-sdk/9.6.0/mapbox-android-sdk-9.6.0.pom'. Received status code 403 from server: Forbidden
+```
+
+The android build file `build.gradle` of mapbox requires the secret token to download the SDK. 
+An environment variable named `SDK_REGISTRY_TOKEN` shall be defined with the access key token. 
+
+In case the token is incorrect, an `401 Unauthorized` error similar to the following is encountered:
 
 ```
 [!] Error installing Mapbox-iOS-SDK
 curl: (22) The requested URL returned error: 401 Unauthorized
 ```
+
 
 ## Avoid Android UnsatisfiedLinkError
 
