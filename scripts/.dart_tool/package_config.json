@@ -1,0 +1,26 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "mustache",
+      "rootUri": "file:///Users/max/.pub-cache/hosted/pub.dartlang.org/mustache-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "recase",
+      "rootUri": "file:///Users/max/.pub-cache/hosted/pub.dartlang.org/recase-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
+      "name": "mapbox_code_gen",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    }
+  ],
+  "generated": "2020-06-10T15:23:39.710811Z",
+  "generator": "pub",
+  "generatorVersion": "2.8.4"
+}

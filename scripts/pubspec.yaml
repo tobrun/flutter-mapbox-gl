@@ -1,0 +1,11 @@
+name: mapbox_code_gen
+description: Just a place to practice
+version: 0.0.1
+author: suragch
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  mustache: 1.1.1
+  recase: 3.0.0

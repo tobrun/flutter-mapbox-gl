@@ -1,0 +1,37 @@
+// This file is generated.
+
+package com.mapbox.mapboxgl;
+
+import com.mapbox.mapboxsdk.style.expressions.Expression;
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory;
+import com.mapbox.mapboxsdk.style.layers.PropertyValue;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import static com.mapbox.mapboxgl.Convert.toMap;
+
+class LayerPropertyConverter {
+
+  static PropertyValue[] interpretLineLayerProperties(Object o) {
+    final Map<String, String> data = (Map<String, String>) toMap(o);
+    final List<PropertyValue> properties = new LinkedList();
+
+    for (Map.Entry<String, String> entry : data.entrySet()) {
+      Expression expression = Expression.Converter.convert(entry.getValue());
+      switch (entry.getKey()) {
+        {{#lineStyles}}
+        case "{{hyphen}}":
+          properties.add(PropertyFactory.{{camel}}(expression));
+          break;
+        {{/lineStyles}}
+        default:
+          break;
+      }
+    }
+
+    return properties.toArray(new PropertyValue[properties.size()]);
+  }
+
+}
