@@ -501,7 +501,7 @@ class MethodChannelMapboxGl extends MapboxGlPlatform {
   @override
   Future<LatLng> requestMyLocationLatLng() async {
     try {
-      final Map<Object, Object> reply = await _channel.invokeMethod(
+      final Map<Object?, Object?> reply = await _channel.invokeMethod(
           'locationComponent#getLastLocation', null);
       double latitude = 0.0, longitude = 0.0;
       if (reply.containsKey('latitude') && reply['latitude'] != null) {
