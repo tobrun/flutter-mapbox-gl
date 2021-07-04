@@ -1,10 +1,12 @@
 part of mapbox_gl_web;
 
 class SymbolManager extends FeatureManager<SymbolOptions> {
-  SymbolManager({
-    required MapboxMap map,
-    ArgumentCallbacks<String>? onTap,
-  }) : super(
+  ArgumentCallbacks<String>? onStyleImageMissing;
+  SymbolManager(
+      {required MapboxMap map,
+      ArgumentCallbacks<String>? onTap,
+      this.onStyleImageMissing})
+      : super(
           sourceId: 'symbol_source',
           layerId: 'symbol_layer',
           map: map,
@@ -50,21 +52,6 @@ class SymbolManager extends FeatureManager<SymbolOptions> {
         'text-halo-width': ['get', 'textHaloWidth'],
         'text-halo-blur': ['get', 'textHaloBlur'],
       }
-    });
-
-    map.on('styleimagemissing', (event) {
-      if (event.id == '') {
-        return;
-      }
-      var density = context['window'].devicePixelRatio ?? 1;
-      var imagePath = density == 1
-          ? '/assets/assets/symbols/custom-icon.png'
-          : '/assets/assets/symbols/$density.0x/custom-icon.png';
-      map.loadImage(imagePath, (error, image) {
-        if (error != null) throw error;
-        if (!map.hasImage(event.id))
-          map.addImage(event.id, image, {'pixelRatio': density});
-      });
     });
   }
 

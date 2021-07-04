@@ -94,6 +94,7 @@ final class MapboxMapController
   MapboxMap.OnCameraIdleListener,
   MapboxMap.OnCameraMoveListener,
   MapboxMap.OnCameraMoveStartedListener,
+  MapView.OnStyleImageMissingListener,
   OnAnnotationClickListener,
   MapboxMap.OnMapClickListener,
   MapboxMap.OnMapLongClickListener,
@@ -262,16 +263,26 @@ final class MapboxMapController
     mapboxMap.addOnCameraMoveListener(this);
     mapboxMap.addOnCameraIdleListener(this);
 
-    mapView.addOnStyleImageMissingListener((id) -> {
-      DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-      final Bitmap bitmap = getScaledImage(id, displayMetrics.density);
-      if (bitmap != null) {
-        mapboxMap.getStyle().addImage(id, bitmap);
-      }
-    });
+    mapView.addOnStyleImageMissingListener(this);
 
     setStyleString(styleStringInitial);
     // updateMyLocationEnabled();
+  }
+
+  @Override
+  public void onStyleImageMissing(@NonNull String id) {
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    final Bitmap bitmap = getScaledImage(id, displayMetrics.density);
+    if (bitmap != null) {
+      mapboxMap.getStyle().addImage(id, bitmap);
+    } else {
+      // We need to return any image so style.setImage can work in asynchronous way
+      Bitmap emptyBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+      mapboxMap.getStyle().addImage(id, emptyBitmap);
+      final Map<String, Object> arguments = new HashMap<>(2);
+      arguments.put("imageName", id);
+      methodChannel.invokeMethod("map#styleImageMissing", arguments);
+    }
   }
 
   @Override

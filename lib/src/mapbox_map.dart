@@ -35,6 +35,7 @@ class MapboxMap extends StatefulWidget {
     this.onMapClick,
     this.onUserLocationUpdated,
     this.onMapLongClick,
+    this.onStyleImageMissing,
     this.onAttributionClick,
     this.onCameraTrackingDismissed,
     this.onCameraTrackingChanged,
@@ -172,6 +173,7 @@ class MapboxMap extends StatefulWidget {
 
   final OnMapClickCallback? onMapClick;
   final OnMapClickCallback? onMapLongClick;
+  final OnStyleImageMissingCallback? onStyleImageMissing;
 
   final OnAttributionClickCallback? onAttributionClick;
 
@@ -276,6 +278,7 @@ class _MapboxMapState extends State<MapboxMap> {
       onCameraTrackingChanged: widget.onCameraTrackingChanged,
       onCameraIdle: widget.onCameraIdle,
       onMapIdle: widget.onMapIdle,
+      onStyleImageMissing: widget.onStyleImageMissing,
     );
     await MapboxMapController.initPlatform(id);
     _controller.complete(controller);

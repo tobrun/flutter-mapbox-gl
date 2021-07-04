@@ -7,6 +7,7 @@ class MapboxMapController: NSObject, FlutterPlatformView, MGLMapViewDelegate, Ma
     
     private var registrar: FlutterPluginRegistrar
     private var channel: FlutterMethodChannel?
+    private var emptyImage: UIImage? = nil
     
     private var mapView: MGLMapView
     private var isMapReady = false
@@ -984,6 +985,27 @@ class MapboxMapController: NSObject, FlutterPlatformView, MGLMapViewDelegate, Ma
         if let channel = channel {
             channel.invokeMethod("camera#onIdle", arguments: arguments);
         }
+    }
+
+    func mapView(_ mapView: MGLMapView, didFailToLoadImage imageName: String) -> UIImage? { 
+        if let channel = channel {
+            channel.invokeMethod("map#styleImageMissing", arguments: [
+                "imageName": imageName
+            ]);
+        }
+        // We need to return any image so style.setImage can work in asynchronous way
+        return blankImage()
+    }
+
+    // Generates empty, 1x1 image
+    func blankImage() -> UIImage {
+        guard emptyImage != nil else {
+            UIGraphicsBeginImageContextWithOptions(.init(width: 1, height: 1), false, 1)
+            let blank = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            return blank!;
+        }
+        return emptyImage!
     }
     
     /*

@@ -57,6 +57,8 @@ abstract class MapboxGlPlatform {
 
   final onMapIdlePlatform = ArgumentCallbacks<void>();
 
+  final onStyleImageMissing = ArgumentCallbacks<String>();
+
   final onUserLocationUpdatedPlatform = ArgumentCallbacks<UserLocation>();
 
   Future<void> initPlatform(int id) async {

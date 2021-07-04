@@ -62,6 +62,7 @@ class MapboxMapController extends MapboxGlPlatform
           pitch: camera['tilt'],
         ),
       );
+      _map.on('styleimagemissing', this._onStyleImageMissing);
       _map.on('load', _onStyleLoaded);
     }
     Convert.interpretMapboxMapOptions(_creationParams['options'], this);
@@ -78,6 +79,27 @@ class MapboxMapController extends MapboxGlPlatform
     e.append(link);
 
     await link.onLoad.first;
+  }
+
+  void _onStyleImageMissing(dynamic event) {
+    _map.addImage(event.id, {
+      "data": Uint8List.fromList([0, 0, 0, 0]),
+      "height": 1,
+      "width": 1
+    });
+    if (this.onStyleImageMissing != null) {
+      this.onStyleImageMissing.call(event.id);
+      return;
+    }
+    var density = context['window'].devicePixelRatio ?? 1;
+    var imagePath = density == 1
+        ? '/assets/assets/symbols/custom-icon.png'
+        : '/assets/assets/symbols/$density.0x/custom-icon.png';
+    _map.loadImage(imagePath, (error, image) {
+      if (error != null) throw error;
+      if (!_map.hasImage(event.id))
+        _map.addImage(event.id, image, {'pixelRatio': density});
+    });
   }
 
   @override
@@ -339,17 +361,18 @@ class MapboxMapController extends MapboxGlPlatform
   Future<void> addImage(String name, Uint8List bytes,
       [bool sdf = false]) async {
     final photo = decodeImage(bytes)!;
-    if (!_map.hasImage(name)) {
-      _map.addImage(
-        name,
-        {
-          'width': photo.width,
-          'height': photo.height,
-          'data': photo.getBytes(),
-        },
-        {'sdf': sdf},
-      );
+    if (_map.hasImage(name)) {
+      _map.removeImage(name);
     }
+    _map.addImage(
+      name,
+      {
+        'width': photo.width,
+        'height': photo.height,
+        'data': photo.getBytes(),
+      },
+      {'sdf': sdf},
+    );
   }
 
   @override
@@ -393,8 +416,10 @@ class MapboxMapController extends MapboxGlPlatform
     for (final annotationType in annotationOrder) {
       switch (annotationType) {
         case 'AnnotationType.symbol':
-          symbolManager =
-              SymbolManager(map: _map, onTap: onSymbolTappedPlatform);
+          symbolManager = SymbolManager(
+              map: _map,
+              onTap: onSymbolTappedPlatform,
+              onStyleImageMissing: this.onStyleImageMissing);
           break;
         case 'AnnotationType.line':
           lineManager = LineManager(map: _map, onTap: onLineTappedPlatform);

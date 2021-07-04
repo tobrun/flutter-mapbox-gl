@@ -10,6 +10,7 @@ typedef void OnMapLongClickCallback(Point<double> point, LatLng coordinates);
 typedef void OnAttributionClickCallback();
 
 typedef void OnStyleLoadedCallback();
+typedef void OnStyleImageMissingCallback(String imageName);
 
 typedef void OnUserLocationUpdated(UserLocation location);
 
@@ -45,6 +46,7 @@ class MapboxMapController extends ChangeNotifier {
       this.onCameraTrackingChanged,
       this.onMapIdle,
       this.onUserLocationUpdated,
+      this.onStyleImageMissing,
       this.onCameraIdle}) {
     _cameraPosition = initialCameraPosition;
 
@@ -160,11 +162,15 @@ class MapboxMapController extends ChangeNotifier {
         .add((location) {
       onUserLocationUpdated?.call(location);
     });
+    MapboxGlPlatform.getInstance(_id).onStyleImageMissing.add((imageName) {
+      onStyleImageMissing?.call(imageName);
+    });
   }
 
   static MapboxMapController init(int id, CameraPosition initialCameraPosition,
       {OnStyleLoadedCallback? onStyleLoadedCallback,
       OnMapClickCallback? onMapClick,
+      OnStyleImageMissingCallback? onStyleImageMissing,
       OnUserLocationUpdated? onUserLocationUpdated,
       OnMapLongClickCallback? onMapLongClick,
       OnAttributionClickCallback? onAttributionClick,
@@ -181,6 +187,7 @@ class MapboxMapController extends ChangeNotifier {
         onCameraTrackingDismissed: onCameraTrackingDismissed,
         onCameraTrackingChanged: onCameraTrackingChanged,
         onCameraIdle: onCameraIdle,
+        onStyleImageMissing: onStyleImageMissing,
         onMapIdle: onMapIdle);
   }
 
@@ -189,6 +196,7 @@ class MapboxMapController extends ChangeNotifier {
   }
 
   final OnStyleLoadedCallback? onStyleLoadedCallback;
+  final OnStyleImageMissingCallback? onStyleImageMissing;
 
   final OnMapClickCallback? onMapClick;
   final OnMapLongClickCallback? onMapLongClick;

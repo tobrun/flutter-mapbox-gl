@@ -109,6 +109,10 @@ class MethodChannelMapboxGl extends MapboxGlPlatform {
             timestamp: DateTime.fromMillisecondsSinceEpoch(
                 userLocation['timestamp'])));
         break;
+      case 'map#styleImageMissing':
+        final String imageName = call.arguments['imageName'];
+        onStyleImageMissing(imageName);
+        break;
       default:
         throw MissingPluginException();
     }
